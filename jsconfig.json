@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "jsx": "react-jsx", // Added to support JSX syntax
+    "allowJs": true // Added to allow importing JS/JSX files
+  }
+}
