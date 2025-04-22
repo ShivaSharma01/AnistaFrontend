@@ -28,47 +28,8 @@ const ScoreItem = ({ icon, title, score, description }) => {
 };
 
 const ScoreBreakdown = ({ onScoreCalculated }) => {
-  const { solarData, energyUsage } = useSolar();
+  const { solarData, energyUsage, solarRadiationScore, shadingScore, roofScore, consumptionScore, financialScore } = useSolar();
   const [dummyState, setDummyState] = useState(0);
-
-  console.log("Inscore breakdown page ", energyUsage)
-
-  const solarRadiationScore = Math.min(
-    (solarData?.solarRadiation / 150) * 100,
-    100
-  );
-  const shadingScore =
-    100 - (solarData?.shadingAnalysis?.annualShadingLossPercent || 0);
-  const roofScore = Math.min(
-    (solarData?.solarPotential?.maxArrayAreaMeters2 / 200) * 100,
-    100
-  );
-    
-
-  const getConsumptionScore = (kwh) => {
-    if (kwh <= 200) return 20;
-    if (kwh <= 400) return 40;
-    if (kwh <= 700) return 60;
-    if (kwh <= 1000) return 80;
-    return 100;
-  };
-  const consumptionScore = getConsumptionScore(energyUsage);
-
-  const calculateFinancialScore = ({ annualSavings, paybackYears, lifetimeSavings }) => {
-    const savingsScore = Math.min((annualSavings / 3000) * 40, 40);
-    const paybackScore = paybackYears < 10 ? (10 - paybackYears) * 4 : 0;
-    const lifetimeScore = Math.min((lifetimeSavings / 50000) * 20, 20);
-    return Math.round(savingsScore + paybackScore + lifetimeScore);
-  };
-
-  const financialMetrics = solarData?.solarPotential?.financialMetrics;
-  const financialScore = financialMetrics
-    ? calculateFinancialScore({
-        annualSavings: Number(financialMetrics.annualSavings),
-        paybackYears: Number(financialMetrics.paybackYears),
-        lifetimeSavings: Number(financialMetrics.lifetimeSavings),
-      })
-    : 0;
 
   useEffect(() => {
     if (solarData) {
@@ -79,15 +40,6 @@ const ScoreBreakdown = ({ onScoreCalculated }) => {
         consumptionScore,
         financialScore,
       ];
-      console.log(solarRadiationScore, "solarRadiationScore");
-      console.log(shadingScore, "shadingScore");
-      console.log(roofScore, "roofScore");
-      console.log(shadingScore, "shadingScore");
-      
-      console.log(consumptionScore, "consumptionScore");
-      console.log(financialScore, "financialScore");
-
-
 
       const validScores = scores.filter((score) => !isNaN(score));
       const averageScore =

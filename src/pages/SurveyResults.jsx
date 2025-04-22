@@ -1,16 +1,27 @@
 import { useNavigate } from "react-router-dom";
 import { useSurvey } from "@/context/SurveyContext"
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, AlertTriangle } from "lucide-react";
 import ResultsGradientBar from "@/components/ResultGradientBar";
 
 const ResultItem = ({ title, description }) => {
+  const isIdeal = () => {
+    if (title === "Roof Condition" && description.includes("may need evaluation")) return false;
+    if (title === "Roof Shading" && description.includes("Significant shading")) return false;
+    if (title === "Electrical Setup" && description.includes("Panel upgrade likely required")) return false;
+    return true;
+  };
+
   return (
     <div className="bg-gray-50 rounded-lg p-6 mb-4">
       <div className="flex items-start">
         <div className="flex-shrink-0">
-          <div className="bg-green-100 rounded-full p-1">
-            <Check className="h-5 w-5 text-green-600" />
+          <div className={`rounded-full p-1 ${isIdeal() ? "bg-green-100" : "bg-orange-100"}`}>
+            {isIdeal() ? (
+              <Check className="h-5 w-5 text-green-600" />
+            ) : (
+              <AlertTriangle className="h-5 w-5 text-orange-600" />
+            )}
           </div>
         </div>
         <div className="ml-4">

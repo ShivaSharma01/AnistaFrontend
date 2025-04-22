@@ -1,31 +1,28 @@
-
 import React from 'react';
 import { Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from "react-router-dom";
-
-
-
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    // Added w-full
-    <nav className="flex justify-between items-center p-4 w-full">
-      <div className="flex items-center">
-        <Sun className="h-6 w-6 text-yellow-400 mr-2" />
-        <span className="text-2xl font-bold text-anista-blue">Anista</span>
-      </div>
-      
-      <div className="hidden md:flex space-x-6">
-        <a href="/estimator" className="hover:text-anista-blue">Solar Estimator</a>
-        <Link to="/solar-score" className="hover:text-anista-blue">Solar Score</Link>
-        {/* <a href="/solar-score" >Solar Score</a> */}
-        <a href="#" className="hover:text-anista-blue">Compare Solutions</a>
-        <a href="/readiness-checklist" className="hover:text-anista-blue">Readiness Checklist</a>
-        <a href="/chat" className="hover:text-anista-blue">AI Chat</a>
+    <nav className="w-full bg-white shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+      {/* Logo */}
+      <div className="flex items-center space-x-2 hover:scale-105 transition-transform duration-200">
+        <Sun className="h-6 w-6 text-yellow-400" />
+        <span className="text-2xl font-bold text-black tracking-tight">Anista</span>
       </div>
 
-      <Button className="bg-anista-blue hover:bg-anista-light-blue text-white">
+      {/* Desktop Nav */}
+      <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
+        <Link to="/estimator" className="text-gray-700 hover:text-blue-400 transition-colors duration-200">Solar Estimator</Link>
+        <Link to="/solar-score" className="text-gray-700 hover:text-blue-400 transition-colors duration-200">Solar Score</Link>
+        <Link to="#" className="text-gray-700 hover:text-blue-400 transition-colors duration-200">Compare Solutions</Link>
+        <Link to="/readiness-checklist" className="text-gray-700 hover:text-blue-400 transition-colors duration-200">Readiness Checklist</Link>
+        <Link to="/chat" className="text-gray-700 hover:text-blue-400 transition-colors duration-200">AI Chat</Link>
+      </div>
+
+      {/* CTA Button */}
+      <Button className="bg-black hover:bg-light text-white px-5 py-2 rounded-full shadow-md transition-all duration-300">
         Get Started
       </Button>
     </nav>
@@ -33,3 +30,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

@@ -2,20 +2,30 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import MapVisualization from './MapVisualization';
 import ResultsCard from './ResultsCard';
+import { useSolar } from '../context/solarContext';
+
+const formatNumber = (num) => {
+  if (num >= 1000) {
+    return Math.floor(num / 1000) + 'k';
+  }
+  return num;
+};
 
 const SolarPotentialResults = ({ address, showResults, solarData }) => {
+  const { latitude, longitude } = useSolar();
+
   if (!showResults || !solarData) return null;
 
   return (
     <div className="max-w-5xl mx-auto my-10">
       <h2 className="text-3xl font-bold text-center mb-8">Your Solar Potential Results</h2>
 
-      <MapVisualization address={address} />
+      <MapVisualization latitude={latitude} longitude={longitude} address={address} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 my-8">
         <ResultsCard 
           icon="sun"
-          value={solarData?.monthlyGeneration}
+          value={`$${formatNumber(Math.round(solarData?.monthlyGeneration))}`}
           unit="kWh"
           description="Monthly Generation"
           color="text-yellow-500"
@@ -31,7 +41,7 @@ const SolarPotentialResults = ({ address, showResults, solarData }) => {
 
         <ResultsCard
           icon="money"
-          value={`$${Math.round(solarData?.costRangeMin)} - $${Math.round(solarData?.costRangeMax)}`}
+          value={`$${formatNumber(Math.round(solarData?.costRangeMin))} - $${formatNumber(Math.round(solarData?.costRangeMax))}`}
           description="Estimated Cost Range"
           color="text-green-500"
         />
